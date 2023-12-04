@@ -34,7 +34,7 @@ try {
     $stmt->execute();
 
     
-    header("refresh:1; url=http://localhost/crud-usuarios-main/?c=providers&m=index");
+    header("refresh:1; url=http://localhost/SENA_pruebas/?c=providers&m=index");
     exit; 
     
 } catch (PDOException $e) {

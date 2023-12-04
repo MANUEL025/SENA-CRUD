@@ -181,14 +181,15 @@
         .no-shift {
             transform: translate(0%, 0%);
         }
+
         body {
-    margin: 0;
-    padding: 0;
-    background-image: url('assets/images/fondologin.avif');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
+            margin: 0;
+            padding: 0;
+            background-image: url('assets/images/fondologin.avif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
     </style>
     <title>Login Page</title>
 </head>
@@ -198,14 +199,13 @@
         <div class="form-container">
             <div class="icon centered-flex"><i class="fa fa-user"></i></div>
             <div class="title">LOGIN</div>
-            <form id="login-form" class="centered-flex">
-                <div class="msg"></div>
+            <form id="login-form" class="centered-flex" method="POST" action="views/login/start.php">
                 <div class="field">
-                    <input type="text" placeholder="Username" id="uname">
+                    <input type="text" placeholder="Username" name="uname" id="uname">
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="field">
-                    <input type="password" placeholder="Password" id="pass">
+                    <input type="password" placeholder="Password" name="pass" id="pass">
                     <i class="fa fa-lock"></i>
                 </div>
                 <div class="action centered-flex">
@@ -215,68 +215,21 @@
                     <a href="#">Forget Password ?</a>
                 </div>
                 <div class="btn-container">
-                    <button id="btn"><a href="?c=products&m=index">Login</button>
+                    <button type="submit" id="btn">Login</button>
                     </a>
                 </div>
-               
+
+                <?php if ($error) : ?>
+                    <div class="error-message">
+                        <?php echo $error; ?>
+                    </div>
+                <?php endif; ?>
             </form>
+
+
         </div>
     </div>
-    <script>
-        function showMsg() {
-    const isEmpty = uname.value === '' || pass.value === '';
-    btn.classList.toggle('no-shift', !isEmpty);
-    btn.disabled = true;
-
-    // Validación de usuario y contraseña simulada
-    const validUsername = 'admi';
-    const validPassword = '1234';
-
-    if (!isEmpty) {
-        if (uname.value === validUsername && pass.value === validPassword) {
-            msg.innerText = '¡Genial! Ahora puedes continuar.';
-            msg.style.color = '#92ff92';
-            btn.classList.add('no-shift');
-        } else {
-            msg.style.color = 'rgb(218 49 49)';
-            msg.innerText = 'Usuario o contraseña incorrectos.';
-            btn.disabled = true; // 
-        }
-    } else {
-        msg.style.color = 'rgb(218 49 49)';
-        msg.innerText = 'Complete los campos, por favor.';
-        btn.disabled = true;
-    }
-}
-
-
-
-
-        const uname = document.getElementById('uname');
-const pass = document.getElementById('pass');
-const btn = document.getElementById('btn');
-const btnContainer = document.querySelector('.btn-container');
-const form = document.querySelector('form');
-const msg = document.querySelector('.msg');
-btn.disabled = true;
-
-function shiftButton() {
-    showMsg();
-    const positions = ['shift-left', 'shift-top', 'shift-right', 'shift-bottom'];
-    const currentPosition = positions.find(dir => btn.classList.contains(dir));
-    const nextPosition = positions[(positions.indexOf(currentPosition) + 1) % positions.length];
-    btn.classList.remove(currentPosition);
-    btn.classList.add(nextPosition);
-    btn.disabled = true;
-}
-
-
-
-btnContainer.addEventListener('mouseover', shiftButton);
-btn.addEventListener('mouseover', shiftButton);
-btn.addEventListener('touchstart', shiftButton);
-form.addEventListener('input', showMsg);
-    </script>
+    
 </body>
 
 </html>

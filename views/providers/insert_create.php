@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Ejecutar la sentencia preparada
         if (mysqli_stmt_execute($stmt)) {
-            header("refresh:1; url=http://localhost/crud-usuarios-main/?c=providers&m=index");
+            header("refresh:1; url=http://localhost/SENA_pruebas/?c=providers&m=index");
             exit;
         } else {
             echo "Problemas en el insert: " . mysqli_stmt_error($stmt);

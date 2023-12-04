@@ -24,7 +24,7 @@ if (mysqli_query($conexion, $query)) {
     echo "<script>alert('El producto fue ingresado con éxito');</script>";
 
     // Redireccionar a una página específica después de 1 segundo
-    header("refresh:1; url=http://localhost/prueba/?c=products&m=index");
+    header("refresh:1; url=http://localhost/SENA_pruebas/?c=products&m=index");
     exit; // Asegura que se detenga la ejecución después de la redirección
 } else {
     echo "Problemas en el insert: " . mysqli_error($conexion);

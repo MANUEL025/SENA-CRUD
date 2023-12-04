@@ -10,13 +10,16 @@ if (!$conexion) {
 // Evitar la inyección SQL usando consultas preparadas
 $nombres = mysqli_real_escape_string($conexion, $_REQUEST['nombres']);
 $username = mysqli_real_escape_string($conexion, $_REQUEST['username']);
-$password = mysqli_real_escape_string($conexion, $_REQUEST['password']);
+$password = mysqli_real_escape_string($conexion, $_REQUEST['password']); // Contraseña sin encriptar
 $email = mysqli_real_escape_string($conexion, $_REQUEST['email']);
 $direccion = mysqli_real_escape_string($conexion, $_REQUEST['direccion']);
 $telefono = mysqli_real_escape_string($conexion, $_REQUEST['telefono']);
 
-// Consulta SQL con valores escapados
-$query = "INSERT INTO usuarios (nombres, username, password, email, direccion, telefono) VALUES ('$nombres', '$username', '$password', '$email', '$direccion', '$telefono')";
+// Encriptar la contraseña utilizando la función de hash password_hash()
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+// Consulta SQL con valores escapados y contraseña encriptada
+$query = "INSERT INTO usuarios (nombres, username, password, email, direccion, telefono) VALUES ('$nombres', '$username', '$hashed_password', '$email', '$direccion', '$telefono')";
 
 // Ejecutar la consulta
 if (mysqli_query($conexion, $query)) {
@@ -24,7 +27,7 @@ if (mysqli_query($conexion, $query)) {
     echo "<script>alert('El usuario fue ingresado con éxito');</script>";
 
     // Redireccionar a una página específica después de 1 segundo
-    header("refresh:1; url=http://localhost/Nuevo%20crud/crud-usuarios-main/?c=users&m=index");
+    header("refresh:0; url=http://localhost/SENA_pruebas/?c=users&m=index");
     exit; // Asegura que se detenga la ejecución después de la redirección
 } else {
     echo "Problemas en el insert: " . mysqli_error($conexion);

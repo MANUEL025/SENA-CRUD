@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userId'])) {
     if (mysqli_stmt_affected_rows($stmt) > 0) {
         echo 
         
-        header("refresh:1; url=http://localhost/prueba/?c=products&m=index");
+        header("refresh:1; url=http://localhost/SENA_pruebas/?c=products&m=index");
         exit;  
     } else {
         // Manejar el caso en que no haya habido ninguna actualización
