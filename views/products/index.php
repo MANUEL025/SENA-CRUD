@@ -55,6 +55,8 @@ try {
                                             <th>DESCRIPCION</th>
                                             <th>PRECIO</th>
                                             <th>CANTIDAD</th>
+                                           
+
 
                                             <th>ACCIONES</th>
                                         </tr>
@@ -71,9 +73,9 @@ try {
                                                     <!-- Botón para abrir el modal -->
                                                     <button onclick="openEditModal(<?= $row['id'] ?>)" class="btn btn-primary">Editar</button>
                                                 </td>
-                                                <!--<td>
+                                                <td>
                                                     <button onclick="openDetailsModal(<?= $row['id'] ?>)" class="btn btn-info">Detalles</button>
-                                                </td> -->
+                                                </td>
                                                 <td data-column='Eliminar'>
                                                     <!-- Botón de eliminar con confirmación -->
                                                     <a href="#" onclick="confirmDelete(<?= $row['id'] ?>)" class="btn btn-danger">Eliminar</a>
@@ -133,50 +135,113 @@ try {
         </div>
     </div>
 
-    
+    <!-- Modal de detalles -->
+<div class="modal fade"  id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document"  >
+        <div class="modal-content" style="width: 600px; max-height: 300px; ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Detalles del Producto</h5>
+                
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detailsModalBody">
+                
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Asignación de datos de usuarios a una variable JavaScript -->
+<!-- fin del modal de detalles   -->
+<script>
+    var usersData = <?php echo json_encode($users); ?>;
+
+    function openDetailsModal(userId) {
+    var userToDisplay = usersData.find(user => user['id'] === userId);
+
+    var detailsModalBody = document.getElementById("detailsModalBody");
+    detailsModalBody.innerHTML = `
+        <div class="content">
+            <div class="container-fluid">
+                <br>    
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="?c=products&m=index" class="btn btn-link"> volver</a>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        
+                                         <img width="100px" class="float-end" src="${userToDisplay['imagen']}" alt="">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <h2>${userToDisplay['nombre']}</h2>
+                                        <p>Descripcion: ${userToDisplay['descripcion']}</p>
+                                        <p>Precio: ${userToDisplay['precio']}</p>
+                                        <p>Cantidad: ${userToDisplay['cantidad']}</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    $('#detailsModal').modal('show');
+}
+
+</script>
+
+
+
+
     <script>
-        var usersData = <?php echo json_encode($users); ?>;
-
-        // Funciones para eliminar el usuario, abrir y cerrar el modal
-        function confirmDelete(userId) {
-            if (confirm("¿Está seguro de que desea eliminar este usuario?")) {
-                window.location.href = "views/products/delete_product.php?id=" + userId;
-
-            }
-        }
-
-        function openEditModal(userId) {
-            var userToEdit = usersData.find(user => user['id'] === userId);
-
-            // Rellenar los campos del formulario dentro del modal con los datos del usuario
-            document.getElementById("userId").value = userToEdit['id'];
-            document.getElementById("productnombre").value = userToEdit['nombre'];
-            document.getElementById("productdescripcion").value = userToEdit['descripcion'];
-            document.getElementById("productprecio").value = userToEdit['precio'];
-            document.getElementById("productcantidad").value = userToEdit['cantidad'];
+        
 
 
-            // Mostrar el modal de edición utilizando Bootstrap
-            $('#editModal').modal('show');
-        }
+    var usersData = <?php echo json_encode($users); ?>;
 
-        // Función para cerrar el modal de edición
-        function closeEditModal() {
-            $('#editModal').modal('close');
-        }
+    // Funciones para eliminar el usuario, abrir y cerrar el modal
+    function confirmDelete(userId) {
+    if (confirm("¿Está seguro de que desea eliminar este usuario?")) {
+    window.location.href = "views/products/delete_product.php?id=" + userId;
 
-        // Restablecer el estado del modal cuando se cierra
-        $('#editModal').on('hidden.bs.modal', function(e) {
-            document.getElementById("userId").value = "";
-            document.getElementById("productnombre").value = "";
-            document.getElementById("productdescripcion").value = "";
-            document.getElementById("productprecio").value = "";
-            document.getElementById("productcantidad").value = "";
-            document.getElementById("productimagen").value = "";
+    }
+    }
 
-        });
+    function openEditModal(userId) {
+    var userToEdit = usersData.find(user => user['id'] === userId);
+
+    // Rellenar los campos del formulario dentro del modal con los datos del usuario
+    document.getElementById("userId").value = userToEdit['id'];
+    document.getElementById("productnombre").value = userToEdit['nombre'];
+    document.getElementById("productdescripcion").value = userToEdit['descripcion'];
+    document.getElementById("productprecio").value = userToEdit['precio'];
+    document.getElementById("productcantidad").value = userToEdit['cantidad'];
+
+
+    // Mostrar el modal de edición utilizando Bootstrap
+    $('#editModal').modal('show');
+    }
+
+    // Función para cerrar el modal de edición
+    function closeEditModal() {
+    $('#editModal').modal('close');
+    }
+
+    // Restablecer el estado del modal cuando se cierra
+    $('#editModal').on('hidden.bs.modal', function(e) {
+    document.getElementById("userId").value = "";
+    document.getElementById("productnombre").value = "";
+    document.getElementById("productdescripcion").value = "";
+    document.getElementById("productprecio").value = "";
+    document.getElementById("productcantidad").value = "";
+    document.getElementById("productimagen").value = "";
+
+    });
     </script>
 
     <!-- Tus scripts adicionales, enlaces a librerías, etc. -->

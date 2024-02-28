@@ -33,7 +33,7 @@ try {
     $stmt->bindParam(1, $id, PDO::PARAM_INT);
     $stmt->execute();
 
-    header("refresh:1; url=http://localhost/Nuevo%20crud/crud-usuarios-main/?c=users&m=index");
+    header("refresh:1; url=http://localhost/SENAcopia/?c=users&m=index");
     exit(); 
     
 } catch (PDOException $e) {

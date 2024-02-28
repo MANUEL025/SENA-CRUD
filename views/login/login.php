@@ -229,7 +229,7 @@
     btn.disabled = true;
 
     // Validación de usuario y contraseña simulada
-    const validUsername = 'admi';
+    const validUsername = 'admin';
     const validPassword = '1234';
 
     if (!isEmpty) {
