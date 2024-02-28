@@ -33,7 +33,7 @@ try {
     $stmt->bindParam(1, $id, PDO::PARAM_INT);
     $stmt->execute();
 
-    header("refresh:1; url=http://localhost/prueba/?c=products&m=index");
+    header("refresh:1; url=http://localhost/SENA_pruebas/?c=products&m=index");
     exit(); 
     
 } catch (PDOException $e) {
